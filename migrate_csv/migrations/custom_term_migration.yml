@@ -1,0 +1,17 @@
+id: custom_term_migration
+label: 'Migrate users from the csv file'
+migration_group: migration
+source:
+  plugin: csv
+  # Full path to the file.
+  path: 'modules/custom/migrate_csv/assest/csv/migrate_csv_brand.csv'
+  header_row_count: 1
+  keys:
+    -tid
+
+process:
+  title: Name
+
+destination:
+  plugin: 'entity:taxonomy_term'
+  default_bundle: Brand

@@ -1,0 +1,47 @@
+id: migrate_csv_bikes
+label: 'Migrate users from the csv file'
+migration_group: migration
+source:
+  plugin: csv
+  # Full path to the file.
+  path: 'modules/custom/migrate_csv/assest/csv/migrate_csv_bike.csv'
+  header_row_count: 1
+  keys:
+    - nid
+
+  # Adding constant value.
+  constants:
+    status: 1
+    uid: 1
+    type: bike
+process:
+  # Adding the mapping between the fields and the csv columns.\
+
+  title: Title
+  type: constants/bike
+  field_engine: Engine
+  status: constants/status
+  uid: constants/uid
+  field_brand:
+    plugin: entity_generate
+    source: Brand
+    value_key: name
+    # Bundle key value
+    # If you get errors consider using only bundle
+    bundle_key: vid
+    # Bundle machine name
+    bundle: brand
+    # Type of entity
+    entity_type: taxonomy_term
+    # Set to true to ignore case on lookup
+    ignore_case: true
+  field_bike_image:
+    plugin: skip_on_empty
+    method: process
+    source: fid
+destination:
+  plugin: 'entity:node'
+  default_bundle: bike
+migration_dependencies:
+  required: {  }
+  optional: {  }
